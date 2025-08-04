@@ -111,15 +111,15 @@ function db_reset_install( $blog_title, $user_name, $user_email, $public, $site_
   $email_password = false;
   if ( ! $user_id && empty( $user_password ) ) {
     $user_password = wp_generate_password( 12, false );
-    $message = __( '<strong><em>Note that password</em></strong> carefully! It is a <em>random</em> password that was generated just for you.' );
+    $message = __( '<strong><em>Note that password</em></strong> carefully! It is a <em>random</em> password that was generated just for you.', 'wordpress-database-reset' );
     $user_id = wp_create_user( $user_name, $user_password, $user_email );
     $email_password = true;
   } elseif ( ! $user_id ) {
     // Password has been provided
-    $message = '<em>'.__( 'Your chosen password.' ).'</em>';
+    $message = '<em>'.__( 'Your chosen password.', 'wordpress-database-reset' ).'</em>';
     $user_id = wp_create_user( $user_name, $user_password, $user_email );
   } else {
-    $message = __( 'User already exists. Password inherited.' );
+    $message = __( 'User already exists. Password inherited.', 'wordpress-database-reset' );
   }
 
   $user = new WP_User( $user_id );

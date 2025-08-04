@@ -53,8 +53,9 @@ class DB_Reset_Command extends WP_CLI_Command {
   }
 
   private function disable_error_reporting() {
-    $this->reporting = error_reporting();
-    error_reporting( 0 );
+    // disable error reporting during reset
+    $this->reporting = error_reporting(); //phpcs:ignore
+    error_reporting( 0 ); //phpcs:ignore
   }
 
   private function sanitize_input( $string = '' ) {
@@ -97,7 +98,7 @@ class DB_Reset_Command extends WP_CLI_Command {
   }
 
   private function handle_after_reset() {
-    error_reporting( $this->reporting );
+    error_reporting( $this->reporting ); //phpcs:ignore
   }
 }
 

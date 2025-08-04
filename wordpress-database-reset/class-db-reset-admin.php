@@ -19,7 +19,7 @@ if (!class_exists('DB_Reset_Admin')) :
       $this->resetter = new DB_Resetter();
       $this->version = $version;
 
-      $this->set_request($_REQUEST);
+      $this->set_request($_REQUEST); //phpcs:ignore
       $this->set_view_variables();
     }
 

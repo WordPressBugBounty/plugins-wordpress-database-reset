@@ -24,7 +24,7 @@ if (!class_exists('DB_Resetter')) :
 
     public function reset(array $tables)
     {
-      if (wp_verify_nonce(@$_REQUEST['submit_reset_form'], 'reset_nounce') && current_user_can('administrator')) {
+      if (wp_verify_nonce(sanitize_text_field(wp_unslash($_REQUEST['submit_reset_form'] ?? '')), 'reset_nounce') && current_user_can('administrator')) {
          // Check if current user is Admin and check the nonce
 
         if (in_array('users', $tables)) {
@@ -74,7 +74,7 @@ if (!class_exists('DB_Resetter')) :
 
       foreach ($tables as $table) {
         $wpdb->wp_database_reset_table = $table;
-        $this->backup[$table] = $wpdb->get_results("SELECT * FROM {$wpdb->wp_database_reset_table}");
+        $this->backup[$table] = $wpdb->get_results("SELECT * FROM {$wpdb->wp_database_reset_table}"); //phpcs:ignore
       }
     }
 
@@ -123,7 +123,7 @@ if (!class_exists('DB_Resetter')) :
       global $wpdb;
 
       foreach ($this->wp_tables as $wp_table) {
-        $wpdb->query("DROP TABLE {$wp_table}");
+        $wpdb->query("DROP TABLE {$wp_table}"); //phpcs:ignore
       }
     }
 
@@ -145,7 +145,7 @@ if (!class_exists('DB_Resetter')) :
 
       $user_id = $this->reset_users ? 1 : $this->user->ID;
         
-      $wpdb->query(
+      $wpdb->query( //phpcs:ignore
         $wpdb->prepare(
           "UPDATE $wpdb->users
           SET user_pass = %s, user_activation_key = ''
@@ -183,7 +183,7 @@ if (!class_exists('DB_Resetter')) :
 
       foreach ($tables as $table) {
         $wpdb->wp_database_reset_table = $table;
-        $wpdb->query("DELETE FROM {$wpdb->wp_database_reset_table}");
+        $wpdb->query("DELETE FROM {$wpdb->wp_database_reset_table}");//phpcs:ignore
       }
     }
 
@@ -199,7 +199,7 @@ if (!class_exists('DB_Resetter')) :
             $data[$column] = $value;
           }
 
-          $wpdb->insert( $table, $data );
+          $wpdb->insert( $table, $data ); //phpcs:ignore
         }
       }
     }
